@@ -6,6 +6,10 @@ const PORT = process.env.PORT || 8080;
 fastify.get('/', async (request, reply) => {
     return { hello: 'world' };
 })
+//Health
+fastify.get('/health', async (request, reply) => {
+    return { status: 'ok' };
+})
 
 // Run the server!
 const start = async () => {
