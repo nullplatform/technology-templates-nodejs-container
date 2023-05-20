@@ -9,4 +9,4 @@ RUN npm ci --only=production
 
 COPY . .
 
-CMD ["pm2-runtime", "start", "index.js", "--name", "application", "--no-daemon", "--no-auto-exit", "--instances", "max", "--log", "/dev/null"]
+CMD ["pm2-runtime", "start", "index.js", "--name", "application", "--no-auto-exit", "--instances", "max", "--output", "/dev/null", "--error", "/dev/null"]
