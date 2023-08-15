@@ -1,25 +1,31 @@
 stages:
-  - build
+  - nullplatform-login
+  - nullplatform-application-metadata
+  - nullplatform-build-create
+  - nullplatform-build-update
+  - nullplatform-asset-docker-image-create
+  - nullplatform-asset-docker-image-build-and-push
+  - nullplatform-build-finalize
+  - company-ci
 
-variables:
-  AWS_ACCESS_KEY_ID: $BUILD_AWS_ACCESS_KEY
-  AWS_SECRET_ACCESS_KEY: $BUILD_AWS_SECRET_ACCESS_KEY
-  ECR_REGISTRY: $BUILD_AWS_REGISTRY
-  ECR_REPOSITORY: $BUILD_AWS_REPOSITORY
-  IMAGE_TAG: $CI_COMMIT_SHA
-  DOCKER_TLS_CERTDIR: ""
+include:
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-login.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-application-metadata.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-create.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-update.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-asset-docker-image-create.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplaftorm-asset-docker-image-build-and-push.yml'
+  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-finalize.yml'
 
-build:
-  image: docker:stable
-  stage: build
-  only:
-    - master
-  services:
-    - docker:dind
-  before_script:
-    - apk add --no-cache python3 py3-pip
-    - pip3 install --no-cache-dir awscli
+company-ci:
+  stage: company-ci
   script:
-    - aws ecr get-login-password --region $BUILD_AWS_REGION | docker login --username AWS --password-stdin $ECR_REGISTRY
-    - docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-    - docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    - echo "builded in nullplaform"
+  dependencies:
+    - nullplatform-login
+    - nullplatform-application-metadata
+    - nullplatform-build-create
+    - nullplatform-build-update
+    - nullplatform-asset-docker-image-create
+    - nullplatform-asset-docker-image-build-and-push
+    - nullplatform-build-finalize
