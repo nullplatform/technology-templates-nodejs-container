@@ -9,13 +9,13 @@ stages:
   - company-ci
 
 include:
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-login.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-application-metadata.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-create.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-update.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-asset-docker-image-create.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplaftorm-asset-docker-image-build-and-push.yml'
-  - remote: 'https://raw.githubusercontent.com/nullplatform/gitlab-pipelines/v1.0.2/nullplatform-build-finalize.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-login.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-application-metadata.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-create.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-update.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-asset-docker-image-create.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplaftorm-asset-docker-image-build-and-push.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-finalize.yml'
 
 company-ci:
   stage: company-ci
