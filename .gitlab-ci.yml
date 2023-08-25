@@ -24,7 +24,7 @@ include:
 company-ci:
   stage: company-ci
   script:
-    - echo "builded in nullplaform"
+    - echo "built in nullplaform"
   dependencies:
     - nullplatform-login
     - nullplatform-application-metadata
