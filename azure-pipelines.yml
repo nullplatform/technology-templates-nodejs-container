@@ -1,10 +1,11 @@
 trigger:
 - main
 
-pool:
-  vmImage: ubuntu-latest
+pool: 'Default'
 
 variables:
+- name: npBuildStatus
+  value: 'failed'
 - group: nullplatform
 
 steps:
@@ -84,6 +85,7 @@ steps:
   inputs:
     action: update
     id: $(CreateBuild.id)
-    status: successful
+    status: $(npBuildStatus)
   name: FinalizeBuild
   displayName: "Finalize Nullplatform build"
+  condition: always()
