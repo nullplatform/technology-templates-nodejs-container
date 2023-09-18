@@ -1,13 +1,14 @@
 trigger:
 - master
 
-pool: 'Default'
+pool: 'Default' #run in hosted agent pool. 
 
 variables:
 - name: npBuildStatus
-  value: 'failed'
+  value: 'failed' #if everyting goes well, this variable is set later to successful in the nullplatform-asset-push.yml after publishing the docker image.
 - group: nullplatform
 
+# the following *.yml templates are located in this repository in the folder ./azure/templates
 steps:
 - template: .azure/templates/nullplatform-start.yml
   
@@ -17,6 +18,7 @@ steps:
   name: NullplatformApplicationParameters
   displayName: "Get build parameters"
 
+# here you build your application
 - template: .azure/templates/nullplatform-asset-build.yml
 
 - template: .azure/templates/nullplatform-asset-push.yml
