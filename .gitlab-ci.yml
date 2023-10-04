@@ -17,8 +17,8 @@ include:
   - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-application-metadata.yml'
   - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-create.yml'
   - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-update.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-asset-docker-image-create.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplaftorm-asset-docker-image-build-and-push.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-asset-docker-image-create-kaniko.yml'
+  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplaftorm-asset-docker-image-build-and-push-kaniko.yml'
   - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-finalize.yml'
 
 company-ci:
