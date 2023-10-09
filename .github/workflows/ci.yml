@@ -23,7 +23,7 @@ jobs:
           node-version: 18
       - name: Get build parameters
         id: get-build-parameters
-        uses: nullplatform/github-action-parameter@v1
+        uses: nullplatform/github-action-secrets-and-variables@v1
         with:
           application-id: ${{ steps.setup-ci.outputs.application-id }}
       - name: Build asset for ${{ steps.setup-ci.outputs.application-name }}
