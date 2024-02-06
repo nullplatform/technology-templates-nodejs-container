@@ -37,4 +37,5 @@ To get started, follow these steps:
 
 ---
 
-Enjoy building applications using this template! If you have any questions or feedback, please open an issue in the repository. Happy coding!
+Enjoy building applications using this template! If you have any questions or feedback, please open an issue in the repository. 
+Happy coding!
