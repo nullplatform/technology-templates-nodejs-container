@@ -33,3 +33,6 @@ company-ci:
     - nullplatform-asset-docker-image-create
     - nullplatform-asset-docker-image-build-and-push
     - nullplatform-build-finalize
+  except:
+    - tags
+
