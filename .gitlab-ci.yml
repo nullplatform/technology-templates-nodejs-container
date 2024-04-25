@@ -2,37 +2,22 @@ default:
   tags:
     - $RUNNER_TAG
 
-stages:
-  - nullplatform-login
-  - nullplatform-application-metadata
-  - nullplatform-build-create
-  - nullplatform-build-update
-  - nullplatform-asset-docker-image-create
-  - nullplatform-asset-docker-image-build-and-push
-  - nullplatform-build-finalize
-  - company-ci
-
-include:
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-login.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-application-metadata.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-create.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-update.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-asset-docker-image-create-kaniko.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplaftorm-asset-docker-image-build-and-push-kaniko.yml'
-  - remote: 'https://gitlab-ci.nullplatform.com/v1/nullplatform-build-finalize.yml'
-
-company-ci:
-  stage: company-ci
+build:
+  stage: build
+  image: public.ecr.aws/nullplatform/np-cli:kaniko
   script:
-    - echo "built in nullplaform"
-  dependencies:
-    - nullplatform-login
-    - nullplatform-application-metadata
-    - nullplatform-build-create
-    - nullplatform-build-update
-    - nullplatform-asset-docker-image-create
-    - nullplatform-asset-docker-image-build-and-push
-    - nullplatform-build-finalize
+    - /np build start
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --no-push --tarPath image.tar --destination foo:1
+    - /np asset push --type docker-image --source image.tar
+    - /np build update --status=successful
   except:
     - tags
 
+build-failed:
+  stage: build
+  image: public.ecr.aws/nullplatform/np-cli:kaniko
+  script:
+    - /np build update --status=failed
+  except:
+    - tags
+  when: on_failure
