@@ -16,10 +16,6 @@ jobs:
     steps:
       - name: Install nullplatform cli
         run: curl https://cli.nullplatform.com/install.sh | sh
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
       - name: Checkout code
         id: checkout-code
         uses: actions/checkout@v4
@@ -32,7 +28,7 @@ jobs:
       - name: Push asset
         id: push-asset
         run: np asset push --type docker-image --source main
-      - name: End Nullplatform CI
+      - name: End nullplatform CI
         if: ${{ always() }}
         id: end-setup-ci
         run: np build update --status ${{ contains(fromJSON('["failure", "cancelled"]'), job.status) && 'failed' || 'successful' }}
