@@ -4,7 +4,6 @@ env:
 on:
   push:
     branches:
-      - master
       - main
 permissions:
   id-token: write
@@ -17,18 +16,13 @@ jobs:
       - name: Install nullplatform cli
         run: curl https://cli.nullplatform.com/install.sh | sh
       - name: Checkout code
-        id: checkout-code
         uses: actions/checkout@v4
       - name: Start nullplatform CI
-        id: setup-ci
         run: np build start
       - name: Build asset
-        id: build-asset
         run: docker build -t main . 
       - name: Push asset
-        id: push-asset
         run: np asset push --type docker-image --source main
       - name: End nullplatform CI
         if: ${{ always() }}
-        id: end-setup-ci
         run: np build update --status ${{ contains(fromJSON('["failure", "cancelled"]'), job.status) && 'failed' || 'successful' }}
