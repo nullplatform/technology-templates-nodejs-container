@@ -1,26 +1,32 @@
 trigger:
-- master
+- main
 
-pool: 'Default' #run in hosted agent pool. 
+pool: Default
 
 variables:
-- name: npBuildStatus
-  value: 'failed' #if everyting goes well, this variable is set later to successful in the nullplatform-asset-push.yml after publishing the docker image.
 - group: nullplatform-${{ variables['Build.DefinitionName'] }}
 
-# the following *.yml templates are located in this repository in the folder ./azure/templates
-steps:
-- template: .azure/templates/nullplatform-start.yml
-  
-- task: NullplatformParameter@0
-  inputs:
-    applicationId: $(applicationId)
-  name: NullplatformApplicationParameters
-  displayName: "Get build parameters"
+jobs:
+- job: build
+  steps:
+  - script: curl https://cli.nullplatform.com/install.sh | sh
+    displayName: 'Install nullplatform CLI'
 
-# here you build your application
-- template: .azure/templates/nullplatform-asset-build.yml
+  - script: np build start
+    displayName: 'Start nullplatform CI'
+    env:
+      NULLPLATFORM_API_KEY: $(NULLPLATFORM_API_KEY)
 
-- template: .azure/templates/nullplatform-asset-push.yml
+  - script: docker build -t main .
+    displayName: 'Build asset'
 
-- template: .azure/templates/nullplatform-end.yml
+  - script: np asset push --type docker-image --source main
+    displayName: 'Push asset'
+    env:
+      NULLPLATFORM_API_KEY: $(NULLPLATFORM_API_KEY)
+
+  - script: np build update --status $(if [ "$(Agent.JobStatus)" = "Failed" ] || [ "$(Agent.JobStatus)" = "Canceled" ]; then echo "failed"; else echo "successful"; fi)
+    displayName: 'End nullplatform CI'
+    condition: always()
+    env:
+      NULLPLATFORM_API_KEY: $(NULLPLATFORM_API_KEY)
