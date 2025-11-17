@@ -1,6 +1,6 @@
 default:
   tags:
-    - $RUNNER_TAG
+    - ${RUNNER_TAG}
   image: alpine:latest
 
 .setup-np-cli: &setup-np-cli
