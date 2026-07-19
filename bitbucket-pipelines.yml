@@ -37,5 +37,3 @@ pipelines:
   branches:
     main:
       - step: *nullplatform-build
-    master:
-      - step: *nullplatform-build
