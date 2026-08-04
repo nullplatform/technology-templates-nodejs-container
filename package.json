@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/nullplatform/template-example#readme",
   "dependencies": {
-    "fastify": "^4.6.0"
+    "fastify": "^5.11.2"
   }
 }
